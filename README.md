@@ -1,71 +1,142 @@
-# API para la Verificación de RNC (Registro Nacional del Contribuyente) y Cédula en la República Dominicana
 
-Esta API proporciona un servicio para verificar información relacionada con un RNC (Registro Nacional del Contribuyente) específico y validar cédulas en la República Dominicana. Utiliza Puppeteer para realizar consultas a la página web de la Dirección General de Impuestos Internos (DGII) y hace llamadas a una API externa para la validación de cédulas.
+---
 
-## Endpoints de la API REST
+# 📜 API para la Verificación de RNC y Cédula en la República Dominicana
 
-### GET /api/checkRNC/:rnc
+Esta API permite verificar el **Registro Nacional del Contribuyente (RNC)** y validar **cédulas** en la República Dominicana. Utiliza [Puppeteer](https://pptr.dev/) para consultar la página web de la Dirección General de Impuestos Internos (DGII) y hace llamadas a una API externa para la validación de cédulas.
 
-Este endpoint permite verificar un RNC específico y devuelve información detallada sobre el mismo.
+---
 
-•⁠ ⁠*Ruta URL:* ⁠ /api/checkRNC/:rnc ⁠
-•⁠ ⁠*Método:* GET
-•⁠ ⁠*Respuestas:*
+## 🚀 Endpoints de la API REST
 
-- ⁠ 200 OK ⁠: Si se pudo verificar el RNC correctamente, devuelve un objeto JSON con la información obtenida.
-- ⁠ 404 Not Found ⁠: Si el RNC no existe, devuelve un objeto JSON con un mensaje de error.
+### 🔍 `GET /api/checkRNC/:rnc`
 
-### GET /api/checkCedula/:cedula
+Verifica un RNC específico y devuelve información detallada.
 
-Este endpoint permite validar una cédula específica utilizando una API externa.
+- **Ruta URL**: `/api/checkRNC/:rnc`
+- **Método**: `GET`
+- **Respuestas**:
+  - `200 OK` ✅: Devuelve un objeto JSON con la información del RNC.
+  - `404 Not Found` ❌: Devuelve un objeto JSON con un mensaje de error si el RNC no existe.
 
-•⁠ ⁠*Ruta URL:* ⁠ /api/checkCedula/:cedula ⁠
-•⁠ ⁠*Método:* GET
-•⁠ ⁠*Respuestas:*
+#### Ejemplo
 
-- ⁠ 200 OK ⁠: Si la cédula es válida, devuelve un objeto JSON con el campo ⁠ valid ⁠ que indica si la cédula es válida o no.
-- ⁠ 500 Internal Server Error ⁠: Si ocurre un error durante la validación de la cédula, se devuelve un objeto JSON con un mensaje de error.
+**Solicitud**:
 
-### Ejemplo
-
-#### Solicitud checkRNC
-
+```
 GET /api/checkRNC/123456789
+```
 
-#### Respuesta (200 OK)
+**Respuesta (200 OK)**:
 
-⁠ json
+```json
 {
-"rnc": "123456789",
-"socialName": "Empresa Ejemplo SRL",
-"comercialName": "EjemploComercial",
-"status": "Activo"
+  "rnc": "123456789",
+  "socialName": "Empresa Ejemplo SRL",
+  "comercialName": "EjemploComercial",
+  "status": "Activo"
 }
+```
 
-#### Solicitud checkCedula
+---
 
+### 🔍 `GET /api/checkCedula/:cedula`
+
+Valida una cédula específica utilizando una API externa.
+
+- **Ruta URL**: `/api/checkCedula/:cedula`
+- **Método**: `GET`
+- **Respuestas**:
+  - `200 OK` ✅: Devuelve un objeto JSON con el campo `valid` que indica si la cédula es válida.
+  - `500 Internal Server Error` ❌: Devuelve un objeto JSON con un mensaje de error si ocurre un problema durante la validación.
+
+#### Ejemplo
+
+**Solicitud**:
+
+```
 GET /api/checkCedula/402270316514
+```
 
-#### Respuesta (200 OK)
+**Respuesta (200 OK)**:
 
-⁠ json
+```json
 {
-"valid": true
+  "valid": true
 }
+```
 
-En este ejemplo, se realiza una solicitud GET al endpoint ⁠ /api/checkCedula/402270316514 ⁠, y la API devuelve la respuesta indicando que la cédula es válida (campo ⁠ valid ⁠ en ⁠ true ⁠).
+**Respuesta en Caso de Error**:
 
-También te muestro cómo sería la respuesta en caso de que la cédula no sea encontrada o se produzca un error:
-
-#### Respuesta en Caso de Error
-
-⁠ json
+```json
 {
-"valid": false,
-"message": "Cedula not found",
-"timestamp": "2024-08-27T11:30:03.286Z",
-"path": "/citizens/402270316514/validate",
-"error": "not_found"
+  "valid": false,
+  "message": "Cedula not found",
+  "timestamp": "2024-08-27T11:30:03.286Z",
+  "path": "/citizens/402270316514/validate",
+  "error": "not_found"
 }
+```
 
-En este caso, la respuesta indica que la cédula no fue encontrada, mostrando un mensaje de error (⁠ message ⁠) y otros detalles relacionados al error.
+---
+
+## 📦 Instalación de Dependencias
+
+1. Asegúrate de tener [Node.js](https://nodejs.org/) y [npm](https://www.npmjs.com/) instalados.
+2. Instala las dependencias necesarias con el siguiente comando:
+
+```bash
+npm install
+```
+
+Esto instalará las siguientes librerías:
+
+- `express` 🛠️: Para la gestión de rutas y el servidor web.
+- `puppeteer` 🕵️‍♂️: Para realizar consultas web.
+- `node-fetch` 🌐: Para hacer solicitudes HTTP a la API externa.
+- `cors` 🔄: Para habilitar el intercambio de recursos entre diferentes dominios.
+
+---
+
+## ▶️ Ejecutar la API
+
+Para ejecutar la API, usa el siguiente comando:
+
+```bash
+node server.js
+```
+
+Asegúrate de que `server.js` es el archivo que contiene la configuración de tu API.
+
+---
+
+## 🔗 Acceder a la API
+
+Con la API en funcionamiento, puedes acceder a los endpoints usando herramientas como [cURL](https://curl.se/), [Postman](https://www.postman.com/), o navegadores web.
+
+**Ejemplo usando cURL**:
+
+Para el endpoint `/api/checkRNC/:rnc`:
+
+```bash
+curl http://localhost:5147/api/checkRNC/123456789
+```
+
+Para el endpoint `/api/checkCedula/:cedula`:
+
+```bash
+curl http://localhost:5147/api/checkCedula/402270316514
+```
+
+---
+
+### Etiquetas
+
+- **Node.js** 🟢
+- **npm** 📦
+- **pnpm** 🔗 (si se usa en lugar de npm)
+- **API** 🌐
+
+---
+
+Yolfry (Ypw) 2024
