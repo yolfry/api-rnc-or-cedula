@@ -1,6 +1,6 @@
 FROM node:21.5-alpine
 
-#docker build -t apiRNC .
+#docker build -t apirnc .
 # Establece el directorio de trabajo
 WORKDIR /usr/src/app
 
