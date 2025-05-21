@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  api:
+    image: apiRNC
+    container_name: apiRNC
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.apiRNC.rule=Host(`rnc.ypw.com.do`)"
+      - "traefik.http.routers.apiRNC.entrypoints=websecure"
+      - "traefik.http.routers.apiRNC.tls=true"
+      - "traefik.http.routers.apiRNC.tls.certresolver=le"
+      - "traefik.http.services.apiRNC.loadbalancer.server.port=5147"
+    networks:
+      - traefik-net
+
+networks:
+  traefik-net:
+    external: true

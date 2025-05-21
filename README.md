@@ -1,6 +1,3 @@
-
----
-
 # 📜 API para la Verificación de RNC y Cédula en la República Dominicana
 
 Esta API permite verificar el **Registro Nacional del Contribuyente (RNC)** y validar **cédulas** en la República Dominicana. Utiliza [Puppeteer](https://pptr.dev/) para consultar la página web de la Dirección General de Impuestos Internos (DGII) y hace llamadas a una API externa para la validación de cédulas.
@@ -98,23 +95,102 @@ Esto instalará las siguientes librerías:
 
 ---
 
-## ▶️ Ejecutar la API
+## ▶️ Ejecutar la API Localmente
 
-Para ejecutar la API, usa el siguiente comando:
+Para ejecutar la API en modo local, utiliza el siguiente comando:
 
 ```bash
 node server.js
 ```
 
-Asegúrate de que `server.js` es el archivo que contiene la configuración de tu API.
+Asegúrate de que `server.js` sea el archivo que contiene la configuración de tu API.
+
+---
+
+## 🐳 Despliegue con Docker
+
+### 1. Compilar la imagen Docker
+
+El contenedor utiliza la imagen base `node:21.5-alpine`, una versión ligera de Node.js. Para construir la imagen Docker con el tag `apiRNC`, ejecuta en la terminal:
+
+```bash
+docker build -t apiRNC .
+```
+
+### 2. Levantar el servicio usando Docker Compose
+
+#### a) Ejecución simple
+
+Utiliza el siguiente archivo `docker-compose.native.yaml` para levantar el contenedor sin configuraciones adicionales:
+
+```yaml
+version: "3.8"
+
+services:
+  api:
+    image: apiRNC
+    container_name: apiRNC
+    ports:
+      - "5147:5147"
+```
+
+Para levantar el contenedor, ejecuta:
+
+```bash
+docker-compose -f docker-compose.native.yaml up --build
+```
+
+La API estará disponible en el puerto `5147`.
+
+#### b) Ejecución con Traefik Proxy y SSL
+
+También puedes ejecutar la API detrás de Traefik, configurando un proxy inverso que gestione el enrutamiento y la seguridad SSL. Utiliza el siguiente archivo `docker-compose.traefik.yaml`:
+
+```yaml
+version: "3.8"
+
+services:
+  api:
+    image: apiRNC
+    container_name: apiRNC
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.apiRNC.rule=Host(`rnc.ypw.com.do`)"
+      - "traefik.http.routers.apiRNC.entrypoints=websecure"
+      - "traefik.http.routers.apiRNC.tls=true"
+      - "traefik.http.routers.apiRNC.tls.certresolver=le"
+      - "traefik.http.services.apiRNC.loadbalancer.server.port=5147"
+    networks:
+      - traefik-net
+
+networks:
+  traefik-net:
+    external: true
+```
+
+**Pasos para ejecutar con Traefik:**
+
+1. Asegúrate de que la red `traefik-net` esté creada. Puedes crearla con el comando:
+
+   ```bash
+   docker network create traefik-net
+   ```
+
+2. Levanta el contenedor con:
+
+   ```bash
+   docker-compose -f docker-compose.traefik.yaml up --build
+   ```
+
+Con esta configuración, la API estará disponible en el dominio `rnc.ypw.com.do` con soporte para SSL.
 
 ---
 
 ## 🔗 Acceder a la API
 
-Con la API en funcionamiento, puedes acceder a los endpoints usando herramientas como [cURL](https://curl.se/), [Postman](https://www.postman.com/), o navegadores web.
+Una vez la API esté en funcionamiento, accede a los endpoints utilizando herramientas como [cURL](https://curl.se/), [Postman](https://www.postman.com/) o directamente desde el navegador.
 
-**Ejemplo usando cURL**:
+**Ejemplo usando cURL:**
 
 Para el endpoint `/api/checkRNC/:rnc`:
 
@@ -134,7 +210,8 @@ curl http://localhost:5147/api/checkCedula/402270316514
 
 - **Node.js** 🟢
 - **npm** 📦
-- **pnpm** 🔗 (si se usa en lugar de npm)
+- **Docker** 🐳
+- **Traefik** 🔗
 - **API** 🌐
 
 ---

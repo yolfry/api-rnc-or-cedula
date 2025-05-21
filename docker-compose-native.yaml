@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  api:
+    image: apiRNC
+    container_name: apiRNC
+    ports:
+      - "5147:5147"
