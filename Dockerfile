@@ -1,6 +1,19 @@
 FROM node:21.5-alpine
 
 #docker build -t apirnc .
+
+# Instalar dependencias para ejecutar Chromium
+RUN apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont
+
+# Establecer variables de entorno para Puppeteer
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
 # Establece el directorio de trabajo
 WORKDIR /usr/src/app
 
