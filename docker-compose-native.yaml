@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   api:
-    image: apiRNC
-    container_name: apiRNC
+    image: apirnc
+    container_name: apirnc
     ports:
       - "5147:5147"

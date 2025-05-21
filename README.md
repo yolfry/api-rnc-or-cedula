@@ -111,10 +111,10 @@ Asegúrate de que `server.js` sea el archivo que contiene la configuración de t
 
 ### 1. Compilar la imagen Docker
 
-El contenedor utiliza la imagen base `node:21.5-alpine`, una versión ligera de Node.js. Para construir la imagen Docker con el tag `apiRNC`, ejecuta en la terminal:
+El contenedor utiliza la imagen base `node:21.5-alpine`, una versión ligera de Node.js. Para construir la imagen Docker con el tag `apirnc`, ejecuta en la terminal:
 
 ```bash
-docker build -t apiRNC .
+docker build -t apirnc .
 ```
 
 ### 2. Levantar el servicio usando Docker Compose
@@ -128,8 +128,8 @@ version: "3.8"
 
 services:
   api:
-    image: apiRNC
-    container_name: apiRNC
+    image: apirnc
+    container_name: apirnc
     ports:
       - "5147:5147"
 ```
@@ -151,15 +151,15 @@ version: "3.8"
 
 services:
   api:
-    image: apiRNC
-    container_name: apiRNC
+    image: apirnc
+    container_name: apirnc
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.apiRNC.rule=Host(`rnc.ypw.com.do`)"
-      - "traefik.http.routers.apiRNC.entrypoints=websecure"
-      - "traefik.http.routers.apiRNC.tls=true"
-      - "traefik.http.routers.apiRNC.tls.certresolver=le"
-      - "traefik.http.services.apiRNC.loadbalancer.server.port=5147"
+      - "traefik.http.routers.apirnc.rule=Host(`rnc.ypw.com.do`)"
+      - "traefik.http.routers.apirnc.entrypoints=websecure"
+      - "traefik.http.routers.apirnc.tls=true"
+      - "traefik.http.routers.apirnc.tls.certresolver=le"
+      - "traefik.http.services.apirnc.loadbalancer.server.port=5147"
     networks:
       - traefik-net
 
