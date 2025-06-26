@@ -1,3 +1,21 @@
+
+<div style="
+  background-color: #FFF4E5;
+  border-left: 6px solid #FFC107;
+  padding: 16px;
+  border-radius: 6px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #856404;
+  margin-bottom: 24px;
+">
+  <strong> ⚠️ Advertencia:</strong> Este proyecto ha sido <strong>descontinuado</strong>.<br>
+  Para una consulta ultra rápida del RNC, por favor utiliza  
+  <a href="https://github.com/yolfry/rncs" target="_blank">yolfry/rncs</a>,  
+  implementado en Go.
+</div>
+
+
+
 # 📜 API para la Verificación de RNC y Cédula en la República Dominicana
 
 Esta API permite verificar el **Registro Nacional del Contribuyente (RNC)** y validar **cédulas** en la República Dominicana. Utiliza [Puppeteer](https://pptr.dev/) para consultar la página web de la Dirección General de Impuestos Internos (DGII) y hace llamadas a una API externa para la validación de cédulas.
@@ -217,3 +235,18 @@ curl http://localhost:5147/api/checkCedula/402270316514
 ---
 
 Yolfry (Ypw) 2024
+
+<div style="
+  background-color: #FFF4E5;
+  border-left: 6px solid #FFC107;
+  padding: 16px;
+  border-radius: 6px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #856404;
+  margin-bottom: 24px;
+">
+  <strong> ⚠️ Advertencia:</strong> Este proyecto ha sido <strong>descontinuado</strong>.<br>
+  Para una consulta ultra rápida del RNC, por favor utiliza  
+  <a href="https://github.com/yolfry/rncs" target="_blank">yolfry/rncs</a>,  
+  implementado en Go.
+</div>
